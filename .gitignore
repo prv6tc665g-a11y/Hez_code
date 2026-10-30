@@ -1,0 +1,14 @@
+# python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+
+# app artefacts (regenerate on every run)
+outputs/
+.dorkforge-cache/
+.env
+
+# node
+node_modules/
+.next/

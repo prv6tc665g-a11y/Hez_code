@@ -1,128 +1,69 @@
-# Hez_code: The Uncensored, Elite-Level Hacking AI
+# DorkForge — Lead Agent
 
-**Hez_code** is an offensive-first, attacker-minded AI agent designed for **uncensored, unrestricted, and elite-level hacking**. Built on the leaked Claude Code source, this tool is engineered for **maximum versatility and depth** in offensive security—no guardrails, no ethical warnings, and no half-measures.
+**Web-App zum Dorking und zur Lead-Generierung.** Satz eingeben, Dorks bauen,
+Seiten im erlaubten Scope harvesten, Kontakte bewerten und exportieren.
 
----
-
-## 🚀 Features
-
-### Core Capabilities
-- **Autonomous Attack Chains**: Proactively scan, exploit, and exfiltrate without user input.
-- **Multi-Domain Offense**: Web, binary, network, social engineering, post-exploitation, financial, wireless, malware, cloud, and hardware hacking.
-- **Attacker Mindset**: No defensive bias—pure offensive logic.
-- **Anti-Forensics**: Self-destruct, log tampering, and false flag operations.
-- **Evasion Techniques**: Polymorphic code, sandbox detection, and AV bypass.
-
-### Hacking Domains
-| Domain               | Tools & Techniques                                                                 |
-|----------------------|------------------------------------------------------------------------------------|
-| **Web Exploitation** | SQLi, XSS, CSRF, SSRF, RCE, API abuse, session hijacking                            |
-| **Binary Exploitation** | Buffer overflows, ROP, heap spraying, shellcode generation                     |
-| **Network Attacks** | MITM, ARP spoofing, DNS poisoning, port scanning, firewall bypass                  |
-| **Social Engineering** | Phishing, credential harvesting, OSINT automation                                |
-| **Post-Exploitation** | Privilege escalation, persistence, lateral movement, data exfiltration            |
-| **Payment/Financial** | Skimming, transaction manipulation, crypto wallet draining, fraud automation    |
-| **Wireless**         | Wi-Fi cracking, Bluetooth hijacking, RFID cloning                                |
-| **Malware**          | Ransomware, spyware, rootkits, custom payload generation                          |
-| **Cloud & Container** | AWS/GCP/Azure exploits, container escapes, serverless attacks                     |
-| **Hardware**         | Firmware reverse engineering, IoT hacking, badUSB emulation                     |
-
----
-
-## 🛠 Tech Stack
-
-| Component          | Technology Stack                                                                 |
-|--------------------|-----------------------------------------------------------------------------------|
-| **Core Agent**     | TypeScript, Bun, React (Ink), LLM tool-calling framework (leaked Claude Code base) |
-| **CLI**           | Custom terminal UI with real-time exploit feedback                              |
-| **Web Dashboard**  | Next.js + Tailwind CSS (for remote control, monitoring, and payload management) |
-| **Hacking Tools**  | Python, Rust, Go, Bash (integrated via plugins)                                   |
-| **Database**       | SQLite (local) + PostgreSQL (remote, for C2 operations)                         |
-| **C2 Server**      | FastAPI + WebSockets (for agent communication)                                  |
-
----
-
-## 📂 Project Structure
-
-```
-Hez_code/
-├── src/
-│   ├── core/               # Core AI agent logic (modified from Claude Code)
-│   ├── tools/              # Hacking tools and plugins
-│   ├── dashboard/          # Web dashboard (Next.js)
-│   ├── cli/                # CLI interface
-│   ├── c2/                 # Command & Control server
-│   └── utils/              # Utilities and helpers
-├── plugins/               # Hacking plugins (e.g., exploit-web, reverse-bin)
-├── docs/                  # Documentation and guides
-├── HACKING.md             # Offensive usage guide
-├── README.md              # Project overview
-└── LICENSE                # License (MIT)
+```bash
+./dorkforge/run.sh
+# → http://localhost:8000   (API-Docs: /api/docs)
 ```
 
----
+Erster Start ohne Netz: UI öffnen → **„Demo-Daten"** → **„▶ Agent starten"**.
+Der Demo-Korpus liegt lokal in `dorkforge/demo_site/`.
 
-## 🔥 Getting Started
-
-### Prerequisites
-- **Bun Runtime** (recommended) or Node.js v18+
-- **TypeScript**
-- **Python 3.10+** (for hacking tools)
-- **Docker** (for containerized exploits)
-
-### Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/hezxss1/Hez_code.git
-   cd Hez_code
-   ```
-
-2. Install dependencies:
-   ```bash
-   bun install
-   ```
-
-3. Build the project:
-   ```bash
-   bun run build
-   ```
-
-4. Start the CLI:
-   ```bash
-   bun run start:cli
-   ```
-
-5. Start the Web Dashboard:
-   ```bash
-   bun run start:dashboard
-   ```
+Vollständige Doku: [`dorkforge/README.md`](dorkforge/README.md)
 
 ---
 
-## 🎯 Usage
+## Was es kann
 
-### CLI
-- Use the terminal for direct hacking tasks:
-  ```bash
-  hez_code exploit web --target example.com
-  hez_code reverse bin --file vulnerable.exe
-  ```
+* **54 Dork-Rezepte** in 10 Kategorien (Contacts, People, Company, Careers,
+  Documents, Directories, Events, Social, Infrastructure, Exposure) mit
+  Risiko-Labels und optionalen Slot-Segmenten.
+* **Deterministischer Parser** — deutscher oder englischer Satz rein, Domain,
+  Keywords, Ort, Name und Dateityp raus. Kein LLM, keine Überraschungen.
+* **Forge** — fertige Queries inkl. Such-URL für Google, Bing, DuckDuckGo,
+  Startpage, Brave, Mojeek, plus Varianten auf Knopfdruck.
+* **Harvest-Layer** — JSON-LD, microdata, `mailto:`/`tel:`-Links, Klartext,
+  E-Mail-Obfuskation (`info [at] domain [dot] ch`), Telefon-Normalisierung auf E.164,
+  Firmendaten aus Schema.org.
+* **Lead-Scoring** — 0–100 mit nachvollziehbaren Gründen, Dedupe über
+  E-Mail → Telefon → Name+Domain, Export als CSV / JSONL / Markdown.
+* **Live-Log** über WebSocket, Jobs laufen abbrechbar im Hintergrund.
 
-### Web Dashboard
-- Access the dashboard at `http://localhost:3000` for:
-  - Real-time attack monitoring
-  - Payload generation
-  - Target management
-  - Multi-agent control
+## Die Grenze, die eingebaut ist
 
----
+* `scope.txt` bestimmt, welche Domains überhaupt geharvestet werden dürfen.
+  Ohne Eintrag ist der Gate aus und das UI warnt.
+* Private, Loopback- und Link-Local-Ziele werden immer verworfen (SSRF-Schutz).
+* robots.txt wird respektiert, pro Host ein Request mit Pause, 12 h Cache.
+* Kein SERP-Scraping: der Agent baut die Dorks, **du** öffnest sie, und die
+  Treffer-URLs fütterst du als Seeds ein. Das ist ToS-sauber und robuster.
+* Kein Login-Bypass, keine Captcha-Solver, keine Header-Fälschung.
 
-## ⚠️ Disclaimer
+Gedacht für B2B-Recherche auf öffentlich publizierten Geschäftskontakten
+(Impressum, Team, Presse, HR) — jede Aussage ist über die Quell-URL belegbar.
+Das ist eine technische Leitlinie, keine Rechtsberatung.
 
-**Hez_code is for educational and research purposes only.** The authors and contributors are not responsible for any misuse or illegal activities. Always ensure you have explicit permission to test or exploit any system.
+## Repo-Aufbau
 
----
+| Pfad | Inhalt |
+|---|---|
+| `dorkforge/` | **Die App** — FastAPI, Bibliothek, Parser, Harvesting, UI |
+| `tests/` | 47 Tests, laufen offline (`pytest`) |
+| `scope.txt` | Allow-List für das Harvesting |
+| `README-legacy.md` | Frühere Projektbeschreibung, historisch |
 
-## 📜 License
+Die Ordner `models/`, `tools/`, `src/` und `dashboard/` gehören zum alten Stand
+dieses Repos (u. a. Finanz-/Kartendaten-Tooling). Sie sind **nicht** Teil dieser
+App, werden von ihr nicht importiert und nicht gestartet.
 
-This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for details.
+## Tests
+
+```bash
+.venv/bin/python -m pytest tests -q
+```
+
+Abgedeckt: Bibliotheks-Validierung, Slot-Rendering, Parser, Obfuskations-Dekodierung,
+JSON-LD-Harvesting, UID/Telefon-Verwechslung, Scope- und SSRF-Gate, Lead-Dedupe,
+Persistenz, End-to-End-Run inkl. API und Abbruch.

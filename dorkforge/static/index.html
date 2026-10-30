@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DorkForge — Lead Agent</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">⛏</span>
+    <div>
+      <h1>DorkForge <em>Lead Agent</em></h1>
+      <p class="sub" id="scope-sub">Scope wird geladen …</p>
+    </div>
+  </div>
+  <div class="pills" id="pills"></div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button class="tab active" data-tab="forge">Forge</button>
+  <button class="tab" data-tab="live">Live</button>
+  <button class="tab" data-tab="leads">Leads <span class="badge" id="lead-badge">0</span></button>
+  <button class="tab" data-tab="scope">Scope</button>
+  <button class="tab" data-tab="library">Library</button>
+</nav>
+
+<main>
+  <!-- ---------------------------------------------------------------- FORGE -->
+  <section class="panel active" id="panel-forge">
+    <div class="grid-2">
+      <div class="card">
+        <label class="label" for="prompt">Was suchst du? (ein Satz genügt)</label>
+        <textarea id="prompt" rows="3" placeholder="Kontakte der Einkaufsabteilung von acme-demo.ch in Aarau, am liebsten mit E-Mail"></textarea>
+        <div class="row">
+          <button class="btn" id="btn-parse">Parse</button>
+          <button class="btn primary" id="btn-forge">Dorks bauen</button>
+          <button class="btn accent" id="btn-run">▶ Agent starten</button>
+          <button class="btn ghost" id="btn-demo">Demo-Daten</button>
+        </div>
+        <details class="parsed" id="parsed">
+          <summary>Erkannte Felder (überschreiben erlaubt)</summary>
+          <div class="fields">
+            <label>Domain<input id="f-domain" placeholder="acme.ch"></label>
+            <label>Keywords<input id="f-keywords" placeholder="einkauf, medizintechnik"></label>
+            <label>Ort<input id="f-place" placeholder="Aarau"></label>
+            <label>Name<input id="f-name" placeholder="Marta Brunner"></label>
+            <label>Dateityp<select id="f-filetype">
+              <option value="">—</option>
+              <option>pdf</option><option>xlsx</option><option>csv</option><option>docx</option>
+              <option>pptx</option><option>sql</option><option>env</option><option>log</option><option>zip</option>
+            </select></label>
+            <label>Kategorie<select id="f-category"></select></label>
+            <label>Risk ceiling<select id="f-risk">
+              <option value="low">low</option><option value="medium" selected>medium</option><option value="high">high</option>
+            </select></label>
+            <label>Anzahl Dorks<input id="f-limit" type="number" min="4" max="60" value="24"></label>
+            <label>Engine<select id="f-engine">
+              <option>google</option><option>bing</option><option>duckduckgo</option>
+              <option>startpage</option><option>brave</option><option>mojeek</option>
+            </select></label>
+            <label>Max. Seiten<input id="f-maxpages" type="number" min="1" max="100" value="12"></label>
+            <label class="check"><input type="checkbox" id="f-follow"> Links folgen (gleiche Scope)</label>
+            <label class="check"><input type="checkbox" id="f-demo" checked> Demo-Korpus (offline)</label>
+          </div>
+          <label class="label" for="seeds">Seed-URLs (eine pro Zeile — z. B. Treffer aus deiner Google-Suche)</label>
+          <textarea id="seeds" rows="3" placeholder="https://acme-demo.ch/kontakt&#10;https://acme-demo.ch/team"></textarea>
+        </details>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Ablauf</h2>
+        <ol class="steps" id="steps">
+          <li><b>Parse</b><span>Satz → Domain, Keywords, Ort, Dateityp</span></li>
+          <li><b>Forge</b><span>Bibliothek → fertige Dork-Queries</span></li>
+          <li><b>Run</b><span>Seiten harvesten (nur in Scope, robots.txt, Rate-Limit)</span></li>
+          <li><b>Score</b><span>Leads deduplizieren, bewerten, exportieren</span></li>
+        </ol>
+        <div class="hint" id="run-hint">
+          Der Agent scrapt keine Suchmaschinen. Er baut die Dorks, du öffnest sie,
+          und die Treffer-URLs fütterst du hier als Seeds ein.
+        </div>
+      </div>
+    </div>
+
+    <div id="dorks"></div>
+  </section>
+
+  <!-- ----------------------------------------------------------------- LIVE -->
+  <section class="panel" id="panel-live">
+    <div class="grid-2">
+      <div class="card">
+        <h2 class="card-title">Run</h2>
+        <div id="job-status" class="hint">Noch kein Run.</div>
+        <div class="stats" id="job-stats"></div>
+        <div class="row">
+          <button class="btn ghost" id="btn-cancel">Abbrechen</button>
+          <button class="btn ghost" id="btn-clear-log">Log leeren</button>
+        </div>
+      </div>
+      <div class="card">
+        <h2 class="card-title">Letzte Runs</h2>
+        <div id="history" class="history"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2 class="card-title">Live-Log</h2>
+      <div class="log" id="log"></div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------- LEADS -->
+  <section class="panel" id="panel-leads">
+    <div class="stats" id="lead-stats"></div>
+    <div class="card">
+      <div class="row">
+        <input id="lead-search" class="input" placeholder="filtern (Firma, E-Mail, Ort …)">
+        <label class="inline">Score ≥ <input id="lead-min" type="range" min="0" max="100" value="0" step="5"><b id="lead-min-val">0</b></label>
+        <button class="btn ghost" id="btn-refresh-leads">Aktualisieren</button>
+        <button class="btn ghost" id="btn-export-csv">CSV</button>
+        <button class="btn ghost" id="btn-export-jsonl">JSONL</button>
+        <button class="btn ghost" id="btn-export-md">Markdown</button>
+        <button class="btn danger" id="btn-clear-leads">Leeren</button>
+      </div>
+      <div class="table-wrap">
+        <table id="lead-table">
+          <thead>
+            <tr><th>Score</th><th>Firma</th><th>Kontakt</th><th>Rolle</th><th>E-Mail</th><th>Telefon</th><th>Ort</th><th>Quelle</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------- SCOPE -->
+  <section class="panel" id="panel-scope">
+    <div class="card">
+      <h2 class="card-title">Scope-Gate</h2>
+      <p class="hint">
+        Nur Domains, die hier stehen, dürfen geharvestet werden. Das ist die
+        Grenze zwischen „Lead-Recherche“ und „fremde Systeme abgrasen“ — und
+        gleichzeitig deine DSGVO/nDSG-Absicherung.
+      </p>
+      <div class="row">
+        <input id="scope-input" class="input" placeholder="meinefirma.ch">
+        <button class="btn primary" id="btn-add-scope">Hinzufügen</button>
+      </div>
+      <ul class="scope-list" id="scope-list"></ul>
+      <p class="warn" id="scope-warn" hidden>⚠ Scope-Gate ist AUS. Jede Domain ist erlaubt. Nur für lokale Demos.</p>
+    </div>
+  </section>
+
+  <!-- -------------------------------------------------------------- LIBRARY -->
+  <section class="panel" id="panel-library">
+    <div class="card">
+      <div class="row">
+        <select id="lib-category"><option value="">alle Kategorien</option></select>
+        <select id="lib-risk">
+          <option value="">alle Risiken</option><option>low</option><option>medium</option><option>high</option>
+        </select>
+        <span class="hint" id="lib-count"></span>
+      </div>
+      <div id="lib-list" class="lib-list"></div>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast"></div>
+<script src="/static/app.js"></script>
+</body>
+</html>
