@@ -11,6 +11,9 @@ Seiten im erlaubten Scope harvesten, Kontakte bewerten und exportieren.
 Erster Start ohne Netz: UI öffnen → **„Demo-Daten"** → **„▶ Agent starten"**.
 Der Demo-Korpus liegt lokal in `dorkforge/demo_site/`.
 
+**Neuer Chat / neue Branch?** [`PROJECT_STATE.md`](PROJECT_STATE.md) — Bootstrap,
+Invarianten, Traps, nächste Schritte in einer Datei.
+
 Vollständige Doku: [`dorkforge/README.md`](dorkforge/README.md)
 
 ---
