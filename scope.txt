@@ -1,0 +1,7 @@
+# Domains you are authorised to research. One per line. `#` starts a comment.
+#
+# The harvesting layer refuses every URL that is not covered by this file.
+# Add the companies you are doing legitimate B2B research on, or that you own.
+#
+# example.com
+# acme-demo.ch

@@ -1,0 +1,69 @@
+{
+  "version": 2,
+  "note": "Lead-generation dork library. Slots: {domain} {kw} {ext} {place} {name}. Optional segments use [[ ... ]] and disappear when their slot is empty.",
+  "entries": [
+    { "id": 1, "category": "contacts", "risk": "low", "q": "site:{domain} (\"kontakt\" OR \"contact\" OR \"impressum\")", "desc": "Contact and imprint pages", "use": "Seed pages for contact harvesting" },
+    { "id": 2, "category": "contacts", "risk": "low", "q": "site:{domain} inurl:kontakt [[{kw}]]", "desc": "German contact URLs", "use": "DACH market" },
+    { "id": 3, "category": "contacts", "risk": "low", "q": "site:{domain} inurl:contact [[{kw}]]", "desc": "English contact URLs", "use": "International" },
+    { "id": 4, "category": "contacts", "risk": "low", "q": "site:{domain} (\"@\" OR \"mailto:\") [[{kw}]]", "desc": "Pages exposing email addresses", "use": "Direct email discovery" },
+    { "id": 5, "category": "contacts", "risk": "low", "q": "site:{domain} (\"Tel\" OR \"Telefon\" OR \"phone\") [[{kw}]]", "desc": "Pages listing phone numbers", "use": "Phone discovery" },
+    { "id": 6, "category": "contacts", "risk": "low", "q": "site:{domain} (\"Ansprechpartner\" OR \"contact person\" OR \"team\")", "desc": "Named contact persons", "use": "Person-level leads" },
+    { "id": 7, "category": "contacts", "risk": "low", "q": "site:{domain} inurl:team OR inurl:people OR inurl:about", "desc": "Team and about pages", "use": "Role and name harvesting" },
+    { "id": 8, "category": "contacts", "risk": "low", "q": "site:{domain} (\"Geschaeftsfuehrer\" OR \"CEO\" OR \"Managing Director\")", "desc": "Decision makers", "use": "Executive leads" },
+    { "id": 9, "category": "contacts", "risk": "low", "q": "\"@{domain}\" -site:{domain}", "desc": "Email addresses mentioning your domain elsewhere", "use": "Off-site footprint" },
+    { "id": 10, "category": "contacts", "risk": "low", "q": "site:{domain} (\"sales\" OR \"vertrieb\" OR \"business development\") [[{kw}]]", "desc": "Sales contacts", "use": "Commercial outreach" },
+
+    { "id": 11, "category": "people", "risk": "low", "q": "site:{domain} (\"Head of\" OR \"Leiter\" OR \"Director\") [[{kw}]]", "desc": "Department heads", "use": "Org mapping" },
+    { "id": 12, "category": "people", "risk": "low", "q": "site:linkedin.com/in \"{domain}\"", "desc": "LinkedIn profiles listing the domain", "use": "Cross-reference (open profiles only)" },
+    { "id": 13, "category": "people", "risk": "medium", "q": "site:{domain} (\"CV\" OR \"Lebenslauf\" OR \"resume\") filetype:pdf", "desc": "Published CVs", "use": "Only where publication is intentional" },
+    { "id": 14, "category": "people", "risk": "low", "q": "site:{domain} (\"author\" OR \"Autor\" OR \"Redaktion\") [[{kw}]]", "desc": "Named authors and editors", "use": "Content-driven contacts" },
+    { "id": 15, "category": "people", "risk": "low", "q": "site:{domain} inurl:speaker OR inurl:referenten [[{place}]]", "desc": "Speaker and event bios", "use": "Conference leads" },
+
+    { "id": 16, "category": "company", "risk": "low", "q": "site:{domain} (\"Handelsregister\" OR \"commercial register\" OR \"UID\")", "desc": "Registry identifiers", "use": "Company verification (CH/EU)" },
+    { "id": 17, "category": "company", "risk": "low", "q": "site:{domain} (\"AG\" OR \"GmbH\" OR \"SA\" OR \"Sarl\") [[{kw}]]", "desc": "Legal form mentions", "use": "Entity disambiguation" },
+    { "id": 18, "category": "company", "risk": "low", "q": "site:{domain} (\"Geschaeftsbericht\" OR \"annual report\") filetype:pdf", "desc": "Annual reports", "use": "Firmographics, headcount" },
+    { "id": 19, "category": "company", "risk": "low", "q": "site:{domain} (\"partner\" OR \"Partner\" OR \"reseller\") [[{kw}]]", "desc": "Partner and reseller pages", "use": "Channel leads" },
+    { "id": 20, "category": "company", "risk": "low", "q": "site:{domain} (\"Kunden\" OR \"clients\" OR \"Referenzen\") [[{kw}]]", "desc": "Client and reference pages", "use": "Co-marketing targets" },
+    { "id": 21, "category": "company", "risk": "low", "q": "site:{domain} (\"Standort\" OR \"location\" OR \"Filiale\") [[{place}]]", "desc": "Locations", "use": "Regional routing" },
+    { "id": 22, "category": "company", "risk": "low", "q": "site:{domain} (\"Presse\" OR \"press\" OR \"media kit\") [[{kw}]]", "desc": "Press contacts", "use": "PR outreach" },
+
+    { "id": 23, "category": "careers", "risk": "low", "q": "site:{domain} (\"offene Stellen\" OR \"open positions\" OR \"karriere\")", "desc": "Careers pages", "use": "Hiring signal + HR contacts" },
+    { "id": 24, "category": "careers", "risk": "low", "q": "site:{domain} (\"bewerbung\" OR \"apply\" OR \"jobs\") @ -inurl:jobdetail", "desc": "Application contact", "use": "HR leads" },
+    { "id": 25, "category": "careers", "risk": "low", "q": "site:{domain} (\"wir suchen\" OR \"hiring\" OR \"join us\") [[{kw}]]", "desc": "Active hiring posts", "use": "Growth signal" },
+    { "id": 26, "category": "careers", "risk": "low", "q": "site:{domain} inurl:karriere OR inurl:careers OR inurl:jobs [[{kw}]]", "desc": "Career URL patterns", "use": "Structured discovery" },
+
+    { "id": 27, "category": "documents", "risk": "low", "q": "site:{domain} filetype:pdf [[{kw}]]", "desc": "PDFs on the domain", "use": "Brochures and contact sheets" },
+    { "id": 28, "category": "documents", "risk": "low", "q": "site:{domain} filetype:pdf (\"contact\" OR \"kontakt\") [[{kw}]]", "desc": "PDFs containing contact info", "use": "High-yield harvesting" },
+    { "id": 29, "category": "documents", "risk": "low", "q": "site:{domain} filetype:pdf (\"team\" OR \"organigramm\" OR \"organisation\")", "desc": "Org charts", "use": "Structure mapping" },
+    { "id": 30, "category": "documents", "risk": "low", "q": "site:{domain} (filetype:xlsx OR filetype:xls OR filetype:csv) [[{kw}]]", "desc": "Spreadsheets", "use": "Lists and price sheets" },
+    { "id": 31, "category": "documents", "risk": "low", "q": "site:{domain} filetype:{ext} [[{kw}]]", "desc": "Custom file type focus", "use": "Configurable extension" },
+    { "id": 32, "category": "documents", "risk": "low", "q": "site:{domain} (\"Newsletter\" OR \"newsletter\") [[{kw}]]", "desc": "Newsletter signup pages", "use": "Opt-in audience" },
+    { "id": 33, "category": "documents", "risk": "low", "q": "site:{domain} (\"Preisliste\" OR \"price list\" OR \"pricing\") filetype:pdf", "desc": "Pricing documents", "use": "Commercial qualification" },
+
+    { "id": 34, "category": "directories", "risk": "low", "q": "site:{domain} inurl:verzeichnis OR inurl:directory [[{kw}]]", "desc": "On-site directories", "use": "Bulk listing pages" },
+    { "id": 35, "category": "directories", "risk": "low", "q": "\"{domain}\" (\"Mitglieder\" OR \"members\" OR \"Verzeichnis\") [[{place}]]", "desc": "Third-party member lists", "use": "Association leads" },
+    { "id": 36, "category": "directories", "risk": "low", "q": "\"{domain}\" (\"Handelskammer\" OR \"chamber of commerce\") [[{place}]]", "desc": "Chamber listings", "use": "Regional business leads" },
+    { "id": 37, "category": "directories", "risk": "low", "q": "site:local.ch OR site:moneyhouse.ch \"{kw}\" [[{place}]]", "desc": "CH business directories", "use": "Swiss firm data" },
+    { "id": 38, "category": "directories", "risk": "low", "q": "site:{domain} (\"Lieferanten\" OR \"suppliers\" OR \"einkauf\" OR \"procurement\")", "desc": "Procurement pages", "use": "Supplier-facing leads" },
+
+    { "id": 39, "category": "events", "risk": "low", "q": "site:{domain} (\"Veranstaltung\" OR \"event\" OR \"webinar\") [[{kw}]]", "desc": "Events", "use": "Attendance-based leads" },
+    { "id": 40, "category": "events", "risk": "low", "q": "site:{domain} (\"Anmeldung\" OR \"registration\") [[{kw}]]", "desc": "Registration pages", "use": "Opt-in capture" },
+    { "id": 41, "category": "events", "risk": "low", "q": "\"{domain}\" (\"Messe\" OR \"trade fair\" OR \"expo\") [[{place}]]", "desc": "Trade fair presence", "use": "Event prospecting" },
+
+    { "id": 42, "category": "social", "risk": "low", "q": "site:linkedin.com/company \"{domain}\"", "desc": "LinkedIn company page", "use": "Company profile" },
+    { "id": 43, "category": "social", "risk": "low", "q": "site:xing.com/companies \"{domain}\" [[{place}]]", "desc": "Xing profile", "use": "DACH business network" },
+    { "id": 44, "category": "social", "risk": "low", "q": "\"{domain}\" (site:twitter.com OR site:x.com OR site:instagram.com) [[{kw}]]", "desc": "Social handles", "use": "Channel discovery" },
+    { "id": 45, "category": "social", "risk": "low", "q": "site:github.com \"{domain}\" [[{kw}]]", "desc": "Public GitHub org and repos", "use": "Engineering contacts" },
+
+    { "id": 46, "category": "infrastructure", "risk": "medium", "q": "site:{domain} (\"staging\" OR \"test\" OR \"dev\") [[{kw}]]", "desc": "Non-production hosts", "use": "Only for domains you operate" },
+    { "id": 47, "category": "infrastructure", "risk": "medium", "q": "site:{domain} (\"api\" OR \"docs\" OR \"swagger\") [[{kw}]]", "desc": "API and docs surfaces", "use": "Integration targets you own" },
+    { "id": 48, "category": "infrastructure", "risk": "medium", "q": "site:{domain} intitle:\"index of\"", "desc": "Open directory listings", "use": "Report to the owner, do not mine" },
+    { "id": 49, "category": "infrastructure", "risk": "low", "q": "site:{domain} (\"sitemap\" OR \"robots.txt\")", "desc": "Crawl entry points", "use": "Polite discovery" },
+    { "id": 50, "category": "infrastructure", "risk": "low", "q": "site:{domain} inurl:newsletter [[{kw}]]", "desc": "Newsletter archives", "use": "Content mining" },
+
+    { "id": 51, "category": "exposure", "risk": "high", "q": "site:{domain} (\"confidential\" OR \"vertraulich\") filetype:pdf", "desc": "Documents marked confidential", "use": "Disclose to the owner, never exfiltrate" },
+    { "id": 52, "category": "exposure", "risk": "high", "q": "site:{domain} (\"passwort\" OR \"password\" OR \"pwd\") filetype:log", "desc": "Log files", "use": "Report-only" },
+    { "id": 53, "category": "exposure", "risk": "high", "q": "site:{domain} filetype:env OR filetype:sql OR filetype:bak", "desc": "Backup and config artefacts", "use": "Report-only" },
+    { "id": 54, "category": "exposure", "risk": "high", "q": "site:{domain} (\"kreditkarte\" OR \"credit card\" OR \"IBAN\") filetype:pdf", "desc": "Payment data in documents", "use": "Report-only, do not process" }
+  ]
+}
